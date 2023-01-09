@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.0.3-alpha.0 (2023-01-09)
+
+**Note:** Version bump only for package @capacitor/preferences
+
+
+
+
+
+
 ## 4.0.2 (2022-11-16)
 
 
