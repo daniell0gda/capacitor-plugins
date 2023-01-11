@@ -79,5 +79,8 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "gh-release": "^7.0.1"
   }
 }
