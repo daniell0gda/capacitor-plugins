@@ -57,9 +57,9 @@ public class TimedNotificationPublisher extends BroadcastReceiver {
             }
             PendingIntent pendingIntent = PendingIntent.getBroadcast(context, id, clone, flags);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && !alarmManager.canScheduleExactAlarms()) {
-                alarmManager.set(AlarmManager.RTC, trigger, pendingIntent);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, trigger, pendingIntent);
             } else {
-                alarmManager.setExact(AlarmManager.RTC, trigger, pendingIntent);
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, trigger, pendingIntent);
             }
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             Logger.debug(Logger.tags("LN"), "notification " + id + " will next fire at " + sdf.format(new Date(trigger)));

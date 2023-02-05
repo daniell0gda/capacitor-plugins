@@ -106,7 +106,7 @@ public class LocalNotificationManager {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = "Default";
             String description = "Default";
-            int importance = android.app.NotificationManager.IMPORTANCE_DEFAULT;
+            int importance = android.app.NotificationManager.IMPORTANCE_HIGH;
             NotificationChannel channel = new NotificationChannel(DEFAULT_NOTIFICATION_CHANNEL_ID, name, importance);
             channel.setDescription(description);
             AudioAttributes audioAttributes = new AudioAttributes.Builder()
@@ -165,12 +165,15 @@ public class LocalNotificationManager {
         if (localNotification.getChannelId() != null) {
             channelId = localNotification.getChannelId();
         }
+
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this.context, channelId)
             .setContentTitle(localNotification.getTitle())
             .setContentText(localNotification.getBody())
             .setAutoCancel(localNotification.isAutoCancel())
             .setOngoing(localNotification.isOngoing())
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+//             .setOnlyAlertOnce(true)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setGroupSummary(localNotification.isGroupSummary());
 
         if (localNotification.getLargeBody() != null) {
@@ -319,7 +322,7 @@ public class LocalNotificationManager {
      * Build a notification trigger, such as triggering each N seconds, or
      * on a certain date "shape" (such as every first of the month)
      */
-    // TODO support different AlarmManager.RTC modes depending on priority
+    // TODO support different AlarmManager.RTC_WAKEUP modes depending on priority
     private void triggerScheduledNotification(Notification notification, LocalNotification request) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         LocalNotificationSchedule schedule = request.getSchedule();
@@ -341,7 +344,7 @@ public class LocalNotificationManager {
             }
             if (schedule.isRepeating()) {
                 long interval = at.getTime() - new Date().getTime();
-                alarmManager.setRepeating(AlarmManager.RTC, at.getTime(), interval, pendingIntent);
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, at.getTime(), interval, pendingIntent);
             } else {
                 setExactIfPossible(alarmManager, schedule, at.getTime(), pendingIntent);
             }
@@ -354,7 +357,7 @@ public class LocalNotificationManager {
             Long everyInterval = schedule.getEveryInterval();
             if (everyInterval != null) {
                 long startTime = new Date().getTime() + everyInterval;
-                alarmManager.setRepeating(AlarmManager.RTC, startTime, everyInterval, pendingIntent);
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, startTime, everyInterval, pendingIntent);
             }
             return;
         }
