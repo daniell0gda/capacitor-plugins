@@ -171,6 +171,7 @@ public class LocalNotificationManager {
             .setContentText(localNotification.getBody())
             .setAutoCancel(localNotification.isAutoCancel())
             .setOngoing(localNotification.isOngoing())
+            .setCategory(NotificationCompat.CATEGORY_MESSAGE)
 //             .setOnlyAlertOnce(true)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
